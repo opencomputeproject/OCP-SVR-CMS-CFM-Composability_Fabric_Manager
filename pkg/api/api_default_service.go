@@ -150,6 +150,28 @@ func (cfm *CfmApiService) AppliancesPost(ctx context.Context, credentials openap
 	return openapi.Response(http.StatusCreated, a), nil
 }
 
+// AppliancesUpdateById -
+func (cfm *CfmApiService) AppliancesUpdateById(ctx context.Context, applianceId string, newApplianceId string) (openapi.ImplResponse, error) {
+	appliance, err := manager.GetApplianceById(ctx, applianceId)
+	if err != nil {
+		return formatErrorResp(ctx, err.(*common.RequestError))
+	}
+
+	a := openapi.Appliance{
+		Id:        appliance.Id,
+		IpAddress: "",
+		Port:      0,
+		Status:    "",
+		Blades: openapi.MemberItem{
+			Uri: manager.GetCfmUriBlades(appliance.Id),
+		},
+		TotalMemoryAvailableMiB: -1,
+		TotalMemoryAllocatedMiB: -1,
+	}
+
+	return openapi.Response(http.StatusOK, a), nil
+}
+
 // AppliancesResync -
 func (cfm *CfmApiService) AppliancesResyncById(ctx context.Context, applianceId string) (openapi.ImplResponse, error) {
 	appliance, failedBladeIds, err := manager.ResyncApplianceById(ctx, applianceId)
@@ -648,6 +670,36 @@ func (cfm *CfmApiService) BladesResyncById(ctx context.Context, applianceId stri
 	return openapi.Response(http.StatusOK, b), nil
 }
 
+// BladesGetMemoryStatus -
+func (cfm *CfmApiService) BladesGetMemoryStatus(ctx context.Context, applianceId string, bladeId string) (openapi.ImplResponse, error) {
+	return openapi.Response(http.StatusNotImplemented, nil), nil
+}
+
+// BladesGetPortStatus -
+func (cfm *CfmApiService) BladesGetPortStatus(ctx context.Context, applianceId string, bladeId string) (openapi.ImplResponse, error) {
+	return openapi.Response(http.StatusNotImplemented, nil), nil
+}
+
+// BladesGetResourceStatus -
+func (cfm *CfmApiService) BladesGetResourceStatus(ctx context.Context, applianceId string, bladeId string) (openapi.ImplResponse, error) {
+	return openapi.Response(http.StatusNotImplemented, nil), nil
+}
+
+// BladesGetStatus -
+func (cfm *CfmApiService) BladesGetStatus(ctx context.Context, applianceId string, bladeId string) (openapi.ImplResponse, error) {
+	return openapi.Response(http.StatusNotImplemented, nil), nil
+}
+
+// BladesUpdateById -
+func (cfm *CfmApiService) BladesUpdateById(ctx context.Context, applianceId string, bladeId string, newBladeId string) (openapi.ImplResponse, error) {
+	return openapi.Response(http.StatusNotImplemented, nil), nil
+}
+
+// DiscoverDevices -
+func (cfm *CfmApiService) DiscoverDevices(ctx context.Context, hostId string) (openapi.ImplResponse, error) {
+	return openapi.Response(http.StatusNotImplemented, nil), nil
+}
+
 // HostGetMemory -
 func (cfm *CfmApiService) HostGetMemory(ctx context.Context, hostId string) (openapi.ImplResponse, error) {
 	host, err := manager.GetHostById(ctx, hostId)
@@ -977,6 +1029,11 @@ func (cfm *CfmApiService) HostsResyncById(ctx context.Context, hostId string) (o
 	}
 
 	return openapi.Response(http.StatusOK, h), nil
+}
+
+// HostsUpdateById -
+func (cfm *CfmApiService) HostsUpdateById(ctx context.Context, hostId string, newHostId string) (openapi.ImplResponse, error) {
+	return openapi.Response(http.StatusNotImplemented, nil), nil
 }
 
 func formatErrorResp(ctx context.Context, re *common.RequestError) (openapi.ImplResponse, error) {

@@ -13,7 +13,7 @@ import {
   VDataTable,
   VDataTableServer,
   VDataTableVirtual,
-} from "vuetify/labs/VDataTable";
+} from "vuetify/components/VDataTable";
 
 // Composables
 import { createVuetify } from 'vuetify'
