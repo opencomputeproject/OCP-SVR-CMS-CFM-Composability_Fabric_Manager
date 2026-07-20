@@ -28,7 +28,7 @@ RUN docker-entrypoint.sh generate -i ${BASEPATH}/${OPENAPI_REDFISH_YAML} -g go-s
 RUN docker-entrypoint.sh generate -i ${BASEPATH}/${OPENAPI_YAML} -g typescript-axios -o ${BASEPATH}/webui/src/axios --skip-validate-spec
 
 
-FROM golang:1.22.1-alpine AS go
+FROM golang:1.25.0-alpine AS go
 ENV BASEPATH=/cfm
 
 RUN apk add git make
@@ -47,7 +47,7 @@ RUN git apply api/patch/fix-missing-import.patch
 # build the excutable
 RUN make build-go
 
-FROM node:alpine as npm
+FROM node:20-alpine as npm
 ENV BASEPATH=/cfm
 
 # copy source code with generated files to go image
